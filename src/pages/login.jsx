@@ -32,7 +32,7 @@ export default function Login() {
         // Note here if the response code is not 200, then it will throw an error
         // You can handle the error in the catch block below
         try {
-            const response = await axios.post("http://localhost:8000/users/login", {
+            const response = await axios.post("http://localhost:8000/api/users/login", {
                 email: email,
                 password: password
             })
