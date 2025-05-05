@@ -1,48 +1,38 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 export default function Login() {
-    // return (
-    // <div className="w-full h-screen bg-[url('/public/loginBg.jpg')] bg-cover  flex  justify-center items-center">
-    //     <div className="w-[50%] h-full ">
-
-    //     </div>
-    //     <div className="w-[50%] h-full flex justify-center items-center">
-    //         <div className=" w-[400px] h-[600px] bg-white backdrop-blur-md shadow-xl rounded-2xl flex flex-col justify-center items-center">
-    //             <h2 className="text-2xl font-bold mb-8 mask-y-from-20">Welcome to Cyclone Beauty Center</h2>
-    //             <input type="text" placeholder="Email" className="w-[300px] h-[50px] border-2 border-gray-300 rounded-2xl p-2 mb-4" />
-    //             <input type="password" placeholder="Password" className="w-[300px] h-[50px] border-2 border-gray-300 rounded-2xl p-2 mb-4" />
-    //             <button className="w-[300px] h-[50px] bg-blue-500 text-white rounded-2xl">Login</button>
-    //             <div className="w-full flex justify-center items-center mt-4">
-    //                 <span className="text-gray-500">Don't have an account?</span>
-    //                 <a href="/signup" className="text-blue-500 ml-2">Sign Up</a>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </div>
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isFocused, setIsFocused] = useState({
         email: false,
         password: false
     });
+    const navigate = useNavigate()
 
     async function handleLogin() {
         // Note here if the response code is not 200, then it will throw an error
         // You can handle the error in the catch block below
         try {
-            const response = await axios.post("http://localhost:8000/api/users/login", {
+            const response = await axios.post(import.meta.env.VITE_API_BASE_URL + "/api/users/login", {
                 email: email,
                 password: password
             })
             toast.success("Login successful")
-            console.log('Login response: ', response.data);
+            // console.log('Login response: ', response.data);
+            localStorage.setItem('token', response.data.token);
+            const token = localStorage.getItem('token');
+            if (response.data.role === "admin") {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             toast.error(`Login failed ${error.response.data.message}`)
-            // alert("Login failed", error.response.data.message)
-            // Handle error here (e.g., show error message)
-
         }
     }
     // const handleSubmit = (e) => {
@@ -52,20 +42,36 @@ export default function Login() {
     // };
 
     return (
-        <div className="min-h-screen flex overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-blue-600 animate-gradient-shift">
+        <div
+            className="min-h-screen flex overflow-hidden opacity-90  "
+            // style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)' }}
+            style={{ backgroundImage: 'url(/mainbg.jpg)' }}
+        >
             {/* Left Section - Logo */}
             <div className="hidden md:flex flex-1 items-center justify-center p-8 animate-fade-in">
                 <div className="text-center text-white">
-                    <div className="text-4xl font-bold mb-8">Your Logo</div>
-                    <h1 className="text-4xl font-bold mb-4">Welcome Back</h1>
+                    <div className="text-4xl font-bold mb-8">
+                        <img
+                            src="/logo.png"
+                            alt="Logo"
+                            className=" mx-auto"
+                            width={900}
+                            height={600}
+                        />
+                    </div>
+                    {/* <h1 className="text-4xl font-bold mb-4">Welcome Back</h1> */}
+                    {/* <h1 className="text-4xl text-blue-600 font-bold mb-4">Cosmetic Beauty Products</h1> */}
                     <p className="text-xl opacity-90">Please login to access your account</p>
                 </div>
             </div>
 
             {/* Right Section - Form */}
             <div className="flex-1 flex items-center justify-center p-4 relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-700 opacity-80 blur-3xl -m-4"></div>
-                <div className="w-full max-w-md bg-gray-200 bg-opacity-90 backdrop-blur-lg  rounded-xl shadow-xl p-8 z-10 animate-slide-in space-y-6">
+                {/* <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-700 opacity-80 blur-3xl -m-4"></div> */}
+                {/* <div className="w-full max-w-md bg-gray-200 bg-opacity-90 backdrop-blur-lg  rounded-xl shadow-xl p-8 z-10 animate-slide-in space-y-6"> */}
+                <div
+                    className="w-full max-w-md bg-white/20 backdrop-blur-lg rounded-xl shadow-xl overflow-hidden p-8 border border-white/30 space-y-6 z-10 animate-slide-in hover:scale-[1.01] transition-all duration-200"
+                >
                     {/* <form onSubmit={handleSubmit} className="space-y-6"> */}
                     <h2 className="text-3xl font-bold text-gray-800 text-center">Login</h2>
 
@@ -128,7 +134,8 @@ export default function Login() {
                     <button
                         // type="submit"
                         onClick={handleLogin}
-                        className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-all transform hover:scale-[1.01] shadow-lg"
+                        // className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-all transform hover:scale-[1.01] shadow-lg"
+                        className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150"
                     >
                         Sign in
                     </button>
@@ -136,9 +143,9 @@ export default function Login() {
                     {/* Sign Up Link */}
                     <div className="text-center text-sm text-gray-600">
                         Don't have an account?{' '}
-                        <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                        <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
                             Sign up
-                        </a>
+                        </Link>
                     </div>
                     {/* </form> */}
                 </div>

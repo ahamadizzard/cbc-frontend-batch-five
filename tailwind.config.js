@@ -3,6 +3,17 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      backdropBlur: {
+        sm: "4px",
+        md: "8px",
+        lg: "12px",
+        xl: "16px",
+      },
+      backdropOpacity: {
+        15: "0.15",
+        20: "0.20",
+        30: "0.30",
+      },
       // Add the animation extensions for the login screen
       animation: {
         "gradient-shift": "gradient 8s ease infinite",
