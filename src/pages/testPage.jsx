@@ -1,28 +1,36 @@
-import React, { useState } from 'react';
-export default function TestPage() {
-    const [count, setCount] = useState(0);
-    // in this case, count is a state variable and 
-    // setCount is a function to update the state variable count
-    // useState is a hook that allows you to add state to 
-    // functional components in React
+import React, { useState } from "react";
 
+import mediaUpload from "../utils/mediaUpload";
+
+export default function TestPage() {
+    const [image, setImage] = useState(null);
+
+    function fileUpload() {
+        mediaUpload(image)
+            .then((res) => {
+                console.log("File uploaded successfully: ", res);
+            })
+            .catch((res) => {
+                console.log("Error uploading file: ", res);
+            });
+    }
 
     return (
-        <div className="w-full h-screen  flex justify-center items-center">
-            <div className="w-[450px] h-[250px] shadow-lg  flex justify-center items-center ">
-                <button onClick={() => {
-                    setCount(count - 1);
-                    console.log("minus clicked", count);
+        <div className="w-full h-screen flex flex-col justify-center items-center">
+            <input
+                type="file"
+                className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+                onChange={(e) => {
+                    setImage(e.target.files[0]); // Set the selected file to state
+                    console.log("File selected: ", e.target.files[0]);
                 }}
-                    className="bg-blue-500 w-[60px] h-[60px] rounded-2xl hover:bg-blue-400 cursor-pointer text-white p-2 ">-</button>
-                <span className="mx-4 text-2xl">
-                    {count}
-                </span>
-                <button onClick={() => {
-                    setCount(count + 1);
-                    console.log("plus clicked", count);
-                }} className="bg-blue-500 w-[60px] h-[60px] rounded-2xl hover:bg-blue-400 cursor-pointer text-white p-2 ">+</button>
-            </div>
+            />
+            <button
+                onClick={fileUpload}
+                className="bg-green-500 text-white px-4 py-2 rounded-md ml-2"
+            >
+                Upload
+            </button>
         </div>
     );
 }
