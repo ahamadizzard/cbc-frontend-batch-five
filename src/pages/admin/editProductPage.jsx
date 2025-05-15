@@ -2,24 +2,29 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import mediaUpload from "../../utils/mediaUpload.jsx";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
-export default function AddProductPage() {
-    const [productId, setProductId] = useState("");
-    const [productName, setProductName] = useState("");
-    const [altNames, setAltNames] = useState([]);
-    const [productCategory, setProductCategory] = useState("");
-    const [productDescription, setProductDescription] = useState("");
+export default function EditProductPage() {
+    const location = useLocation();
+    const [productId, setProductId] = useState(location.state.productId);
+    const [productName, setProductName] = useState(location.state.productName);
+    const [altNames, setAltNames] = useState(location.state.altNames.join(","));
+    const [productCategory, setProductCategory] = useState(location.state.productCategory || "N/A");
+    const [productDescription, setProductDescription] = useState(location.state.productDescription);
     const [productImages, setProductImages] = useState([]);
-    const [labelPrice, setLabelPrice] = useState("");
-    const [salePrice, setSalePrice] = useState("");
-    const [stock, setStock] = useState("");
-    const [isAvailable, setIsAvailable] = useState(true);
+    const [labelPrice, setLabelPrice] = useState(location.state.labelPrice);
+    const [salePrice, setSalePrice] = useState(location.state.salePrice);
+    const [stock, setStock] = useState(location.state.stock);
+    const [isAvailable, setIsAvailable] = useState(location.state.isAvailable);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
-    async function AddProduct() {
+    console.log(location);
+
+    async function UpdateProduct() {
+
+
         //get the token from local storage
         const token = localStorage.getItem("token");
         // check if token is null
@@ -28,10 +33,9 @@ export default function AddProductPage() {
             toast.error("Please login to add product");
             return;
         }
-        if (productImages.length <= 0) {
-            toast.error("Please select atleast one image");
-            return;
-        }
+
+        let imageUrls = location.state.productImages;
+
 
         // this will run all the promises in parallel
         // and return the result in the same order as the promises were created
@@ -44,7 +48,10 @@ export default function AddProductPage() {
         }
         setIsLoading(true);
         try {
-            const imageUrls = await Promise.all(promisesArray);
+            if (productImages.length > 0) {
+                imageUrls = await Promise.all(promisesArray);
+            }
+
             const altNamesArray = altNames.split(",");
             console.log(altNamesArray);
             const product = {
@@ -63,13 +70,13 @@ export default function AddProductPage() {
             // console.log(imageUrls);
 
             await axios
-                .post(import.meta.env.VITE_API_BASE_URL + "/api/products", product, {
+                .put(import.meta.env.VITE_API_BASE_URL + "/api/products/" + productId, product, {
                     headers: {
                         Authorization: "Bearer " + token,
                     },
                 })
                 .then((response) => {
-                    toast.success("Product added successfully");
+                    toast.success("Product updated successfully");
                     navigate("/admin/products");
                 })
                 .catch((error) => {
@@ -86,13 +93,14 @@ export default function AddProductPage() {
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-center ">
-            <h1 className="text-2xl font-bold mb-4">Add Product</h1>
+            <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
             <input
                 type="text"
                 placeholder="Product ID"
                 className="input input-bordered w-full max-w-xs mb-2"
                 value={productId}
                 onChange={(e) => setProductId(e.target.value)}
+                disabled
             />
             <input
                 type="text"
@@ -164,12 +172,12 @@ export default function AddProductPage() {
                 className="text-white mt-4 ml-2 bg-blue-500 rounded font-bold py-2 px-4 mr-4"
                 onClick={() => {
                     // setIsLoading(true);
-                    AddProduct();
+                    UpdateProduct();
                     // setIsLoading(false);
                 }}
                 disabled={isLoading}
             >
-                {isLoading ? "Loading..." : "Add Product"}
+                {isLoading ? "Loading..." : "Update Product"}
             </button>
             {/* add a cancel button to return to adminProductPage */}
             <button

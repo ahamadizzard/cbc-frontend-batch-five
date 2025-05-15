@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-import AdminProductPage from "./admin/adminProductPage.jsx";
-import AddProductPage from "./admin/addProductPage.jsx";
+import AdminProductPage from "./admin/productPage";
+import AddProductPage from "./admin/addProductPage";
+import EditProductPage from "./admin/editProductPage";
 
 export default function AdminPage() {
     const userFirstName = localStorage.getItem('user');
@@ -24,6 +25,7 @@ export default function AdminPage() {
                     <Route path="/orders" element={<h1 className="text-2xl  m-5">Orders</h1>} />
                     <Route path="/reviews" element={<h1 className="text-2xl  m-5">Reviews</h1>} />
                     <Route path="/add-product" element={<AddProductPage />} />
+                    <Route path="/edit-product" element={<EditProductPage />} />
                 </Routes>
             </div>
         </div>
