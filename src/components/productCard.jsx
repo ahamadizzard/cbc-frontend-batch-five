@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 export default function ProductCard(props) {
     const product = props.product;
 
     return (
-        <div className="w-[300px] h-[450px] bg-white shadow-lg flex flex-col rounded-lg overflow-hidden hover:shadow-xl transition-transform duration-300 ease-in-out hover:scale-105 animate-fade-in">
+        <Link to={"/overview/" + product.productId} className="w-[300px] h-[450px] bg-white shadow-lg flex flex-col rounded-lg overflow-hidden hover:shadow-xl transition-transform duration-300 ease-in-out hover:scale-105 animate-fade-in">
             {/* Header - Product Image with Badge */}
             <div className="relative h-48 overflow-hidden">
                 <img
@@ -66,6 +68,6 @@ export default function ProductCard(props) {
                     {product.isAvailable ? 'Add to Cart' : 'Out of Stock'}
                 </button>
             </div>
-        </div >
+        </Link >
     );
 }

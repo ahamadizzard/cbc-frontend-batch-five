@@ -26,8 +26,10 @@ export default function Login() {
             // console.log('Login response: ', response.data);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', response.data.firstName);
-            const token = localStorage.getItem('token');
-            const userFirstName = localStorage.getItem('user');
+            localStorage.setItem('role', response.data.role);
+            // const token = localStorage.getItem('token');
+            // const userFirstName = localStorage.getItem('user');
+            // const role = localStorage.getItem('role');
             if (response.data.role === "admin") {
                 navigate('/admin');
             } else {
