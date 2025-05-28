@@ -37,6 +37,7 @@ export default function AddProductPage() {
         // and return the result in the same order as the promises were created
         // this will return an array of urls
         // if one failed, all will fail
+        // Create an empty array to store the promises
         const promisesArray = [];
 
         for (let i = 0; i < productImages.length; i++) {

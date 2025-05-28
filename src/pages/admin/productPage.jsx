@@ -7,6 +7,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
 import { VscPreview } from "react-icons/vsc";
 import toast from 'react-hot-toast';
+import Loading from '../../components/loading.jsx';
 
 export default function AdminProductPage() {
 
@@ -117,10 +118,10 @@ export default function AdminProductPage() {
 
             <div className="w-full h-full max-h-full overflow-y-auto p-4 bg-gray-50">
                 {isLoading ?
-                    <div className='w-full h-full flex flex-col items-center justify-center'>
-                        <div className='w-[70px] h-[70px]  border-[5px] border-t-yellow-300 rounded-full animate-spin border-indigo-600'></div>
-                        <h1>Loading...</h1>
+                    <div>
+                        <Loading />
                     </div>
+
 
                     : <table className='w-full border-collapse rounded-lg overflow-hidden shadow-lg'>
                         <thead>
