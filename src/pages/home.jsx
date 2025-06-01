@@ -3,6 +3,7 @@ import Header from '../components/header.jsx'
 import ProductsPage from './client/productsPage.jsx'
 import ProductOverview from './client/productOverview.jsx'
 import CartPage from './client/cart.jsx'
+import Checkout from './client/checkout.jsx'
 export default function HomePage() {
     return (
         <div className="w-full h-screen flex flex-col items-center">
@@ -13,6 +14,7 @@ export default function HomePage() {
                     <Route path="/products" element={<ProductsPage />} />
                     <Route path="/about" element={<div>About</div>} />
                     <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<Checkout />} />
                     <Route path="/contact" element={<div>Contact</div>} />
                     <Route path="/overview/:id" element={<ProductOverview />} />
                     <Route path="/*" element={<hi>404 Not Found</hi>} />

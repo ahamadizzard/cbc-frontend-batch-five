@@ -1,20 +1,58 @@
 import { useState } from "react";
-import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
-import { BiMinus, BiTrash, BiPlus, BiArrowBack } from "react-icons/bi";
+// import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
+import { BiMinus, BiTrash, BiPlus, BiArrowBack, BiCart } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-export default function CartPage() {
-    const [cart, setCart] = useState(getCart());
-    const [totalPrice, setTotalPrice] = useState(getTotal());
-    const [totalItems, setTotalItems] = useState(cart.length);
-    const [totalLabelPrice, setTotalLabelPrice] = useState(getTotalLabelPrice());
+export default function Checkout() {
+    const location = useLocation();
+    const [cart, setCart] = useState(location.state?.cart || []);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalItems, setTotalItems] = useState(0);
+    const [totalLabelPrice, setTotalLabelPrice] = useState(0);
 
+    function getTotal() {
+        let total = 0;
+        cart.forEach((item) => {
+            total += item.price * item.quantity;
+        });
+        return total;
+    }
+    function getTotalLabelPrice() {
+        let totalLabelPrice = 0;
+        cart.forEach((item) => {
+            totalLabelPrice += item.labelPrice * item.quantity;
+        });
+        return totalLabelPrice;
+    }
+    function removeFromCart(index) {
+        const newCart = cart.filter((item, i) => i !== index);
+        setCart(newCart);
+    }
+
+    function changeQuantity(index, quantity) {
+        const newQuantity = cart[index].quantity + quantity;
+        if (newQuantity <= 0) {
+            removeFromCart(index);
+            return;
+        } else {
+            const newCart = [...cart];
+            newCart[index].quantity = newQuantity;
+            setCart(newCart);
+        }
+    }
+    // function getTotalItems() {
+    //     let totalItems = 0;
+    //     cart.forEach((item) => {
+    //         totalItems += totalItems;
+    //     })
+    //     return totalItems;
+    // }
 
     return (
         <div className="w-full h-full flex flex-row items-center justify-center pt-4">
             <div className="w-[800px] h-full flex flex-col items-center rounded-lg pt-4">
-                {cart.map((item) => {
+                {cart.map((item, index) => {
                     return (
                         <div
                             key={item.productId}
@@ -49,10 +87,11 @@ export default function CartPage() {
                             <div className="w-[80px] h-full flex flex-row justify-center items-center">
                                 <button className="bg-accent text-white px-2 py-1 rounded-md font-bold cursor-pointer hover:bg-accent/60 mr-2 aspect-square"
                                     onClick={() => {
-                                        addToCart(item, -1);
-                                        setCart(getCart()); // Update cart state with new quantity
+                                        changeQuantity(index, -1);
+                                        // setCart(getCart()); // Update cart state with new quantity
                                         setTotalPrice(getTotal());
                                         setTotalLabelPrice(getTotalLabelPrice());
+                                        setTotalItems(getTotalItems());
                                     }}
                                 >
                                     <BiMinus />
@@ -60,10 +99,11 @@ export default function CartPage() {
                                 <span className="text-lg font-bold">{item.quantity}</span>
                                 <button className="bg-accent text-white px-2 py-1 rounded-md font-bold cursor-pointer hover:bg-accent/60 ml-2 aspect-square"
                                     onClick={() => {
-                                        addToCart(item, 1);
-                                        setCart(getCart()); // Update cart state with new quantity
+                                        changeQuantity(index, 1);
+                                        // setCart(getCart()); // Update cart state with new quantity
                                         setTotalPrice(getTotal());
                                         setTotalLabelPrice(getTotalLabelPrice());
+                                        setTotalItems(getTotalItems());
                                     }}
                                 >
                                     <BiPlus />
@@ -82,9 +122,10 @@ export default function CartPage() {
                                 className="absolute right-[5px] text-red-600 hover:bg-red-500 text-lg hover:text-white px-2 py-1 flex flex-row justify-center items-center gap-1  rounded-full  cursor-pointer ml-2 aspect-square"
                                 onClick={() => {
                                     removeFromCart(item.productId);
-                                    setCart(getCart());
+                                    // setCart(getCart());
                                     setTotalPrice(getTotal());
                                     setTotalLabelPrice(getTotalLabelPrice());
+                                    setTotalItems(getTotalItems());
                                 }}
                             >
                                 <BiTrash />
@@ -104,27 +145,29 @@ export default function CartPage() {
                 <div className="w-full h-full flex flex-col bg-white rounded-lg shadow-lg  p-3">
                     <h1 className="text-2xl font-bold text-center text-secondary">Cart Summary</h1>
                     <div className="flex flex-row justify-between items-center mt-4">
-                        <h1 className="text-lg font-semibold text-gray-600">Label Price Total</h1>
-                        <h1 className="text-lg font-semibold text-gray-600">Rs. {totalLabelPrice.toFixed(2)}</h1>
+                        <h1 className="text-lg font-semibold text-gray-600">Total Items :</h1>
+                        <h1 className="text-lg font-semibold text-gray-600"> {cart.length}</h1>
+                    </div>
+                    <div className="flex flex-row justify-between items-center mt-4">
+                        <h1 className="text-lg font-semibold text-gray-600">Total Without Discount</h1>
+                        <h1 className="text-lg font-semibold text-gray-600">Rs. {getTotalLabelPrice().toFixed(2)}</h1>
                     </div>
                     <div className="flex flex-row justify-between relative items-center mt-4">
                         <h1 className="text-lg font-semibold text-gray-600">Discount Total</h1>
-                        <h1 className="text-lg font-semibold absolute right-[100px] text-red-600">({(((totalLabelPrice - totalPrice) / totalLabelPrice) * 100).toFixed(2)} %)</h1>
-                        <h1 className="text-lg font-semibold text-red-600">Rs. {(totalLabelPrice - totalPrice).toFixed(2)}</h1>
+                        <h1 className="text-lg font-semibold absolute right-[100px] text-red-600">({(((getTotalLabelPrice() - getTotal()) / getTotalLabelPrice()) * 100).toFixed(2)} %)</h1>
+                        <h1 className="text-lg font-semibold text-red-600">Rs. {(getTotalLabelPrice() - getTotal()).toFixed(2)}</h1>
                     </div>
                     <div className="flex flex-row justify-between items-center mt-4">
                         <h1 className="text-lg font-semibold text-gray-600">Total Amount to Pay</h1>
-                        <h1 className="text-lg font-semibold text-gray-600">Rs. {totalPrice.toFixed(2)}</h1>
+                        <h1 className="text-lg font-semibold text-gray-600">Rs. {getTotal().toFixed(2)}</h1>
                     </div>
-                    <Link to="/checkout" state={
-                        {
-                            cart: cart
-                        }
-                    }
-                        className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60">
-                        <MdPayment /> Checkout
+                    <button className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60">
+                        <MdPayment /> Place Order
+                    </button>
+                    <Link to="/cart" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
+                        <BiCart /> Back to Cart
                     </Link>
-                    <Link to="/products" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
+                    <Link to="/products" className="bg-blue-600 text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
                         <BiArrowBack /> Back to Shopping
                     </Link>
                 </div>
