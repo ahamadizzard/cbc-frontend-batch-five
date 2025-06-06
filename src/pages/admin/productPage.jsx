@@ -103,7 +103,7 @@ export default function AdminProductPage() {
                             // onChange={(e) => setSearchTerm(e.target.value)}
                             />
                         </div>
-                        <Link to="/admin/add-product" className='px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2 cursor-pointer'>
+                        <Link to="/admin/add-product" className='px-4 py-2 bg-accent text-white rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2 cursor-pointer'>
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                             </svg>
@@ -125,7 +125,7 @@ export default function AdminProductPage() {
 
                     : <table className='w-full border-collapse rounded-lg overflow-hidden shadow-lg'>
                         <thead>
-                            <tr className='bg-indigo-600 text-white'>
+                            <tr className='bg-accent text-white'>
                                 <th className='p-3 text-left'>Product ID</th>
                                 <th className='p-3 text-left'>Product Name</th>
                                 <th className='p-3 text-left'>Alt. Names</th>

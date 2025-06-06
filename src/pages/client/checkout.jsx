@@ -1,4 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 // import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
 import { BiMinus, BiTrash, BiPlus, BiArrowBack, BiCart } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
@@ -7,9 +9,8 @@ import { Link, useLocation } from "react-router-dom";
 export default function Checkout() {
     const location = useLocation();
     const [cart, setCart] = useState(location.state?.cart || []);
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalItems, setTotalItems] = useState(0);
-    const [totalLabelPrice, setTotalLabelPrice] = useState(0);
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [address, setAddress] = useState("");
 
     function getTotal() {
         let total = 0;
@@ -48,7 +49,50 @@ export default function Checkout() {
     //     })
     //     return totalItems;
     // }
+    async function placeOrder() {
+        // get the token from the local storage
+        const token = localStorage.getItem("token");
+        // check if the token exists
+        if (!token) {
+            toast.error("Please login to place order")
+        }
+        // validate the phone number and address
+        if (!phoneNumber || !address) {
+            toast.error("Please enter phone number and address")
 
+            return;
+        }
+
+        // if the token exists, then call the api to place the order
+        const orderInfo = {
+            products: [],
+            phone: phoneNumber,
+            address: address,
+        }
+
+        for (let i = 0; i < cart.length; i++) {
+            const item = {
+                productId: cart[i].productId,
+                quantity: cart[i].quantity
+            }
+            // below commented out method also possible
+            // orderInformation.product.push(item)
+            orderInfo.products[i] = item;
+        }
+
+        try {
+            const response = await axios.post(import.meta.env.VITE_API_BASE_URL + "/api/orders", orderInfo, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+            )
+            toast.success("Order placed successfully")
+            console.log(response.data)
+        } catch (error) {
+            toast.error("Error placing order, Try again..")
+        }
+    }
     return (
         <div className="w-full h-full flex flex-row items-center justify-center pt-4">
             <div className="w-[800px] h-full flex flex-col items-center rounded-lg pt-4">
@@ -90,7 +134,7 @@ export default function Checkout() {
                                         changeQuantity(index, -1);
                                         // setCart(getCart()); // Update cart state with new quantity
                                         setTotalPrice(getTotal());
-                                        setTotalLabelPrice(getTotalLabelPrice());
+                                        // setTotalLabelPrice(getTotalLabelPrice());
                                         setTotalItems(getTotalItems());
                                     }}
                                 >
@@ -102,7 +146,7 @@ export default function Checkout() {
                                         changeQuantity(index, 1);
                                         // setCart(getCart()); // Update cart state with new quantity
                                         setTotalPrice(getTotal());
-                                        setTotalLabelPrice(getTotalLabelPrice());
+                                        // setTotalLabelPrice(getTotalLabelPrice());
                                         setTotalItems(getTotalItems());
                                     }}
                                 >
@@ -124,7 +168,7 @@ export default function Checkout() {
                                     removeFromCart(item.productId);
                                     // setCart(getCart());
                                     setTotalPrice(getTotal());
-                                    setTotalLabelPrice(getTotalLabelPrice());
+                                    // setTotalLabelPrice(getTotalLabelPrice());
                                     setTotalItems(getTotalItems());
                                 }}
                             >
@@ -161,7 +205,32 @@ export default function Checkout() {
                         <h1 className="text-lg font-semibold text-gray-600">Total Amount to Pay</h1>
                         <h1 className="text-lg font-semibold text-gray-600">Rs. {getTotal().toFixed(2)}</h1>
                     </div>
-                    <button className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60">
+                    {/* vertical line below */}
+                    <div className="w-full h-[1px] bg-gray-300 my-4"></div>
+                    {/* Payment Method to choose cash or card payment */}
+                    <div className="flex flex-row justify-between items-center mt-4">
+                        <h1 className="text-lg font-semibold text-gray-600">Payment Method</h1>
+                        <h1 className="text-lg font-semibold text-gray-600">Cash on Delivery</h1>
+                    </div>
+                    {/* Address */}
+                    <div className="flex flex-row justify-between gap-2 items-center mt-4">
+                        <h1 className="text-lg font-semibold text-gray-600">Telephone: </h1>
+                        <input type="text" placeholder="Enter your phone number" className="w-[calc(100%-120px)] h-[40px] text-end border border-gray-300 rounded-lg p-2" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                    </div>
+                    <div className="flex flex-row justify-between gap-2 items-center mt-4">
+                        <h1 className="text-lg font-semibold text-gray-600">Address: </h1>
+                        <input type="text" placeholder="Enter your address" className="w-[calc(100%-120px)] h-[40px] border border-gray-300 rounded-lg p-2" value={address} onChange={(e) => setAddress(e.target.value)} />
+                    </div>
+                    {/* vertical line below */}
+                    <div className="w-full h-[1px] bg-gray-300 my-4"></div>
+                    {/* Total Price */}
+                    <div className="flex flex-row justify-between items-center mt-4">
+                        <h1 className="text-lg font-semibold text-gray-600">Total Price</h1>
+                        <h1 className="text-lg font-semibold text-gray-600">Rs. {getTotal().toFixed(2)}</h1>
+                    </div>
+                    {/* Place Order Button */}
+                    <button className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60"
+                        onClick={placeOrder}>
                         <MdPayment /> Place Order
                     </button>
                     <Link to="/cart" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
