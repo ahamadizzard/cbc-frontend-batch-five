@@ -40,12 +40,12 @@ export default function ProductOverview() {
     return (
         <>
             {status == "success" && (
-                <div className="w-full h-full flex flex-col">
-                    <div className="w-full flex">
-                        <div className="w-[50%] h-full flex justify-center items-center mt-10">
+                <div className="w-full h-full flex flex-col ">
+                    <div className="w-full flex flex-col md:flex-row items-center justify-center">
+                        <div className="w-[500px] md:w-[30%] h-full flex justify-center items-center mt-10">
                             <ImageSlider images={product.productImages} />
                         </div>
-                        <div className="w-[50%] justify-center items-center flex mt-10">
+                        <div className="w-full md:w-[50%] justify-center items-center flex mt-10">
                             <div className="w-[500px] h-[600px] flex flex-col items-center">
                                 <h1 className="w-full text-center text-color text-2xl text-secondary font-semibold mb-2">
                                     {product.productName} <br />
@@ -69,14 +69,14 @@ export default function ProductOverview() {
                                 </p>
                                 <div>
                                     {product.labelPrice > product.salePrice ? (
-                                        <div className="flex justify-center items-center my-4 mb-32">
-                                            <h1 className="text-secondary text-4xl font-bold">
+                                        <div className="flex flex-col md:flex-row justify-center items-center my-4 mb-10">
+                                            <h1 className="text-secondary text-4xl font-bold mb-2">
                                                 Price Rs.{" "}
                                             </h1>
-                                            <span className="text-gray-500 text-4xl line-through">
+                                            <span className="text-gray-500 text-4xl line-through mb-2">
                                                 {product.labelPrice.toFixed(2)}
                                             </span>
-                                            <span className="text-accent text-4xl mx-2 font-bold">
+                                            <span className="text-accent text-4xl mx-2 font-bold mb-2">
                                                 {product.salePrice.toFixed(2)}{" "}
                                             </span>
                                         </div>
@@ -87,8 +87,8 @@ export default function ProductOverview() {
                                             </span>
                                         </div>
                                     )}
-                                    <div className="w-full flex justify-center items-center my-8 ">
-                                        <button className="bg-accent text-white px-4 py-2 rounded-md font-semibold cursor-pointer hover:bg-purple-900 shadow-2xl shadow-accent"
+                                    <div className="w-full flex flex-col md:flex-row gap-2 justify-center items-center my-8 ">
+                                        <button className="bg-accent w-32 text-white px-4 py-2 rounded-md font-semibold mb-2 md:mb-0 cursor-pointer hover:bg-purple-900 shadow-2xl shadow-accent"
                                             onClick={() => {
                                                 console.log("old cart");
                                                 console.log(getCart());
@@ -98,7 +98,7 @@ export default function ProductOverview() {
                                             }}>
                                             Add to Cart
                                         </button>
-                                        <button className="bg-accent text-white px-4 py-2 rounded-md font-semibold cursor-pointer hover:bg-purple-900 shadow-2xl shadow-secondary ml-4"
+                                        <button className="bg-red-700 hover:bg-red-900 w-32 text-white px-4 py-2 rounded-md font-semibold cursor-pointer shadow-2xl shadow-red-700"
                                             onClick={(e) => {
                                                 navigate("/checkout", {
                                                     state: {
@@ -136,7 +136,7 @@ export default function ProductOverview() {
                         ) : (
                             <div className="space-y-6">
                                 {reviews.map((review, index) => (
-                                    <div key={index} className="w-[1200px] bg-gray-50 p-4 rounded-lg flex flex-row shadow-sm">
+                                    <div key={index} className=" bg-gray-50 p-4 rounded-lg flex flex-col md:flex-row shadow-sm">
                                         <div className="w-[calc(100%-320px)]  flex-shrink-0 mr-4 ">
                                             <div className="flex items-center mb-2">
                                                 <div className="font-semibold text-secondary mr-2">
@@ -171,8 +171,9 @@ export default function ProductOverview() {
                             </div>
                         )}
                     </div>
-                </div>
-            )}
+                </div >
+            )
+            }
             {status == "loading" && <Loading />}
         </>
     );

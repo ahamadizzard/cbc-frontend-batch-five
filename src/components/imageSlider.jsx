@@ -13,10 +13,10 @@ export default function ImageSlider(props) {
     }
 
     return (
-        <div className="w-[500px] h-[600px] ">
+        <div className="w-[90%] md:w-[500px] h-[600px] ">
             <img
                 src={images[currentIndex]}
-                className="w-full h-[500px] object-cover rounded-2xl"
+                className="w-[500px] md:w-full h-[400px] object-cover rounded-2xl"
                 alt="missing main image.."
             />
             <div className="w-full h-[100px]  flex justify-center items-center">

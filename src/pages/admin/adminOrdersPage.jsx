@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Loading from "../../components/loading";
 // import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
+import { toast } from "react-hot-toast";
 
 export default function AdminOrdersPage() {
     const [orders, setOrders] = useState([]);
@@ -114,8 +115,40 @@ export default function AdminOrdersPage() {
                                                 <div>
                                                     <p className="text-xs text-gray-500">Status</p>
                                                     <p className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(orders[selectedOrder].status)}`}>
-                                                        {orders[selectedOrder].status}
+                                                        {orders[selectedOrder].status.toUpperCase()}
                                                     </p>
+                                                    <select
+                                                        onChange={async (e) => {
+                                                            const newStatus = e.target.value;
+                                                            try {
+                                                                const token = localStorage.getItem("token");
+                                                                if (!token) {
+                                                                    alert("Please login to continue");
+                                                                    return;
+                                                                }
+                                                                const response = await axios.put(
+                                                                    `${import.meta.env.VITE_API_BASE_URL}/api/orders/${orders[selectedOrder].orderId}/${newStatus}`,
+                                                                    {},
+                                                                    {
+                                                                        headers: {
+                                                                            'Authorization': `Bearer ${token}`
+                                                                        }
+                                                                    }
+                                                                );
+                                                                setIsLoading(true); // Refresh orders after update
+                                                                setIsModalOpen(false); // Close modal after update
+                                                                toast.success("Order status updated successfully");
+                                                            } catch (error) {
+                                                                toast.error("An error occurred while updating the order status: " + (error.response?.data?.message || "Unknown Error"));
+                                                                console.error("Error updating order status:", error);
+                                                            }
+                                                        }}>
+                                                        <option selected disabled>Change Status</option>
+                                                        <option value="pending" >Pending</option>
+                                                        <option value="completed" >Completed</option>
+                                                        <option value="cancelled" >Cancelled</option>
+                                                        <option value="shipped" >Shipped</option>
+                                                    </select>
                                                 </div>
 
                                                 {/* Customer Info */}
@@ -266,7 +299,7 @@ export default function AdminOrdersPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}>
-                                                {order.status}
+                                                {order.status.toUpperCase()}
                                             </span>
                                         </td>
                                     </tr>

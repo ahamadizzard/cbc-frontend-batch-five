@@ -25,7 +25,7 @@ export default function AdminPage() {
         <div className="w-full h-screen flex bg-accent">
             {/* // divide into 2 sections */}
             <div className="w-[200px] h-full bg-white  flex flex-col gap-4 p-4 ">
-                <h4 className="bg-blue-300 rounded-md p-2 text-center font-bold w-full">{userFirstName}</h4>
+                <h4 className="bg-accent text-white rounded-md p-2 text-center font-bold w-full">{userFirstName}</h4>
                 <h1 className="text-2xl font-bold ">Admin Panel</h1>
                 <Link className={getClass("products")} to="/admin/products">Products</Link>
                 <Link className={getClass("users")} to="/admin/users">Users</Link>
