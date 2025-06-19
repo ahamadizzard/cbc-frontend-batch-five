@@ -25,9 +25,9 @@ export default function Header() {
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/contact">Contact</Link>
             </div>
             {/* Cart */}
-            <div className="absolute right-10 w-[80px] hidden md:flex justify-center items-center gap-4 bg-accent hover:bg-accent/70 rounded-full ">
-                <Link to="/cart" className="text-[20px] font-bold mx-2">
-                    <BiCart className="text-white text-2xl " />
+            <div className="absolute right-10 w-[60px] hidden md:flex justify-center items-center bg-accent hover:bg-accent/70 rounded-full ">
+                <Link to="/cart" className="text-[15px] font-bold">
+                    <BiCart className="text-white text-2xl mt-1" />
                     <span className="text-sm font-bold text-white">Cart</span>
                 </Link>
             </div>

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { GrGoogle } from 'react-icons/gr';
+import { useGoogleLogin } from '@react-oauth/google';
 
 
 export default function Login() {
@@ -12,7 +14,29 @@ export default function Login() {
         email: false,
         password: false
     });
+
     const navigate = useNavigate()
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: (response) => {
+            const accessToken = response.access_token;
+            axios.post(import.meta.env.VITE_API_BASE_URL + "/api/users/login/google", {
+                accessToken: accessToken
+            }).then((response) => {
+                toast.success("Login successful")
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', response.data.firstName);
+                if (response.data.role === "admin") {
+                    navigate('/admin')
+                } else {
+                    navigate('/')
+                }
+            }).catch((error) => {
+                toast.error(`Login failed ${error.response.data.message}`)
+            })
+        }
+    })
 
     async function handleLogin() {
         // Note here if the response code is not 200, then it will throw an error
@@ -47,8 +71,7 @@ export default function Login() {
 
     return (
         <div
-            className="min-h-screen flex overflow-hidden opacity-90  "
-            // style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80)' }}
+            className="min-h-screen flex overflow-hidden opacity-85"
             style={{ backgroundImage: 'url(/mainbg.jpg)' }}
         >
             {/* Left Section - Logo */}
@@ -58,7 +81,7 @@ export default function Login() {
                         <img
                             src="/logo.png"
                             alt="Logo"
-                            className=" mx-auto"
+                            className=" mx-auto filter brightness-250 "
                             width={900}
                             height={600}
                         />
@@ -128,7 +151,7 @@ export default function Login() {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                            <a href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                                 Forgot password?
                             </a>
                         </div>
@@ -142,6 +165,13 @@ export default function Login() {
                         className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150"
                     >
                         Sign in
+                    </button>
+                    <button
+                        onClick={googleLogin}
+                        className="w-full py-2 px-4 bg-blue-900 flex flex-row items-center justify-center gap-4 hover:bg-blue-600 text-white font-medium rounded-md transition duration-150"
+                    >
+                        <GrGoogle className='text-3xl text-gray-400 cursor-pointer hover:text-gray-800' />
+                        <span className='text-gray-400 text-xl font-semibold'>Sign-in with Google </span>
                     </button>
 
                     {/* Sign Up Link */}
