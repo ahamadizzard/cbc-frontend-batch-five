@@ -4,6 +4,9 @@ import ProductsPage from './client/productsPage.jsx'
 import ProductOverview from './client/productOverview.jsx'
 import CartPage from './client/cart.jsx'
 import Checkout from './client/checkout.jsx'
+import SearchProductsPage from './client/searchProduct.jsx'
+
+
 export default function HomePage() {
     return (
         <div className="w-full h-screen flex flex-col items-center">
@@ -12,6 +15,7 @@ export default function HomePage() {
                 <Routes path="/*">
                     <Route path="/" element={<div>Home Page</div>} />
                     <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/search" element={<SearchProductsPage />} />
                     <Route path="/about" element={<div>About</div>} />
                     <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={<Checkout />} />

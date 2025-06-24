@@ -2,24 +2,55 @@ import axios from "axios"
 import { useState } from "react"
 import { useEffect } from "react"
 import ProductCard from "../../components/productCard.jsx"
+import Loading from "../../components/loading.jsx"
 
-export default function ProductsPage() {
+export default function SearchProductsPage() {
     const [products, setProducts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (isLoading) {
-            axios.get(import.meta.env.VITE_API_BASE_URL + '/api/products')
-                .then((response) => {
-                    console.log(response.data)
-                    setProducts(response.data)
-                    setIsLoading(false)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }
-    }), [isLoading]
+        const searchProducts = async () => {
+            if (searchQuery.length > 0) {
+                try {
+                    const response = await axios.get(
+                        import.meta.env.VITE_API_BASE_URL + '/api/products/search/' + searchQuery)
+
+                    // const response = await axios.get(
+                    //     `${import.meta.env.VITE_API_BASE_URL}/api/products/search?q=${encodeURIComponent(searchQuery)}`
+                    // );
+                    setProducts(response.data);
+
+                } catch (error) {
+                    setError(err.response?.data?.message || "Failed to search products");
+                    setProducts([]); // Clear products on error
+                    console.log(error);
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                axios.get(import.meta.env.VITE_API_BASE_URL + '/api/products/')
+                    .then((response) => {
+                        setProducts(response.data)
+                        setIsLoading(false)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            }
+        };
+
+        // Add debouncing (500ms delay)
+        const debounceTimer = setTimeout(() => {
+            setIsLoading(true);
+            searchProducts();
+        }, 500);
+
+        return () => clearTimeout(debounceTimer); // Cleanup on unmount or query change
+    }, [searchQuery]); // Add searchQuery as dependency
+
+
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100">
@@ -34,17 +65,22 @@ export default function ProductsPage() {
                             <a href="#" className="text-gray-600 hover:text-blue-600">About</a>
                             <a href="#" className="text-gray-600 hover:text-blue-600">Contact</a>
                         </nav>
-                        <div className="flex items-center space-x-4">
-                            <button className="p-2 text-gray-600 hover:text-blue-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            </button>
-                            <button className="p-2 text-gray-600 hover:text-blue-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                </svg>
-                            </button>
+                        <div className="flex items-center space-x-2 ">
+                            {/* <button className="p-2 text-gray-600 hover:text-blue-600"> */}
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            {/* </button> */}
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:border-accent transition duration-200 w-full max-w-xs"
+                                value={searchQuery}
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value)
+                                    setIsLoading(true)
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
@@ -57,15 +93,29 @@ export default function ProductsPage() {
                     <p className="text-gray-600">Discover our collection of premium products</p>
                 </div>
 
-                <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 md:gap-6">
-                    {products.map(product => (
-                        <ProductCard
-                            key={product.productId}
-                            product={product}
-                            className="w-full h-full "
-                        />
-                    ))}
-                </div>
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-64">
+                        <Loading />
+                    </div>
+                ) : error ? (
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        {error}
+                    </div>
+                ) : products.length === 0 && searchQuery ? (
+                    <div className="bg-blue-100 border border-blue-400 text-blue-700 flex justify-center items-center px-4 py-3 rounded">
+                        No products found matching "{searchQuery}"
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4 md:gap-6">
+                        {products.map(product => (
+                            <ProductCard
+                                key={product.productId}
+                                product={product}
+                                className="w-full h-full"
+                            />
+                        ))}
+                    </div>
+                )}
             </main>
 
             {/* Page Footer */}

@@ -23,6 +23,7 @@ export default function Header() {
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/signup">Sign Up</Link>
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/admin">Admin</Link>
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/contact">Contact</Link>
+                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/search">Products</Link>
             </div>
             {/* Cart */}
             <div className="absolute right-10 w-[60px] hidden md:flex justify-center items-center bg-accent hover:bg-accent/70 rounded-full ">

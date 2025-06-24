@@ -103,8 +103,8 @@ export default function AdminUsersPage() {
                                 {/* User Image */}
                                 <div className="flex justify-center mb-6">
                                     <img
-                                        src={users[selectedUser].imgURL || 'https://avatar.iran.liara.run/public/boy?username=ash'}
-                                        alt={`${users[selectedUser].firstName} ${users[selectedUser].lastName}`}
+                                        src={users[selectedUser]?.imgURL || 'https://avatar.iran.liara.run/public/boy?username=ash'}
+                                        alt={`${users[selectedUser]?.firstName} ${users[selectedUser]?.lastName}`}
                                         className="w-24 h-24 rounded-full object-cover border-2 border-accent"
                                     />
                                 </div>
@@ -114,19 +114,19 @@ export default function AdminUsersPage() {
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-gray-600">First Name</label>
                                         <p className="text-lg font-medium text-gray-800 p-2 bg-gray-50 rounded">
-                                            {users[selectedUser].firstName}
+                                            {users[selectedUser]?.firstName}
                                         </p>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-gray-600">Last Name</label>
                                         <p className="text-lg font-medium text-gray-800 p-2 bg-gray-50 rounded">
-                                            {users[selectedUser].lastName}
+                                            {users[selectedUser]?.lastName}
                                         </p>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="block text-sm font-medium text-gray-600">Email</label>
                                         <p className="text-lg font-medium text-gray-800 p-2 bg-gray-50 rounded">
-                                            {users[selectedUser].email}
+                                            {users[selectedUser]?.email}
                                         </p>
                                     </div>
                                     <div className="space-y-2">
@@ -134,7 +134,7 @@ export default function AdminUsersPage() {
                                         {currentUserRole === 'admin' ? (
                                             <select
                                                 className="w-full p-2 border border-gray-300 rounded focus:ring-accent focus:border-accent"
-                                                value={users[selectedUser].role}
+                                                value={users[selectedUser]?.role}
                                                 onChange={async (e) => {
                                                     const newRole = e.target.value;
                                                     try {
@@ -169,7 +169,7 @@ export default function AdminUsersPage() {
                                                 <input
                                                     type="checkbox"
                                                     className="rounded border-gray-300 text-accent focus:ring-accent"
-                                                    checked={users[selectedUser].isBlocked}
+                                                    checked={users[selectedUser]?.isBlocked}
                                                     onChange={async (e) => {
                                                         const isBlocked = e.target.checked;
                                                         try {
@@ -189,7 +189,7 @@ export default function AdminUsersPage() {
                                                     }}
                                                 />
                                                 <span className="ml-2 text-gray-700">
-                                                    {users[selectedUser].isBlocked ? 'User is Blocked' : 'User is Active'}
+                                                    {users[selectedUser]?.isBlocked ? 'User is Blocked' : 'User is Active'}
                                                 </span>
                                             </label>
                                         </div>
