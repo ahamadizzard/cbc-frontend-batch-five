@@ -18,7 +18,7 @@ function App() {
         <div>
           <Toaster position='top-right' />
           <Header />
-          <Routes path="/*">
+          <Routes >
             {/* // this will redirect to login page if the user is not logged in */}
             {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
             {/* // this will redirect to login page if the user is not logged in */}

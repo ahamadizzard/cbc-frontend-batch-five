@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ImageSlider(props) {
     const images = props.images;
     const [currentIndex, setCurrentIndex] = useState(0);
+
+
+    // Auto-slide effect
+    useEffect(() => {
+        if (!images || images.length === 0) return;
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % images.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, [images]);
 
     if (!images || images.length === 0) {
         return (

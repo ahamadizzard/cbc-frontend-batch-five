@@ -1,15 +1,44 @@
-import { useState } from "react";
-import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
+import { useEffect, useState } from "react";
+// import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
+import { getCart, getTotal, getTotalLabelPrice } from "../../utils/cart";
 import { BiMinus, BiTrash, BiPlus, BiArrowBack } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useCart } from "../../components/cartContext.jsx";
 
 export default function CartPage() {
-    const [cart, setCart] = useState(getCart());
-    const [totalPrice, setTotalPrice] = useState(getTotal());
-    const [totalItems, setTotalItems] = useState(cart.length);
-    const [totalLabelPrice, setTotalLabelPrice] = useState(getTotalLabelPrice());
+    // const [cart, setCart] = useState(getCart());
+    const { cartItems: cart, addToCart, removeFromCart } = useCart();
 
+    // const [totalPrice, setTotalPrice] = useState(getTotal());
+    // const [totalItems, setTotalItems] = useState(cart.length);
+    // const [totalLabelPrice, setTotalLabelPrice] = useState(getTotalLabelPrice());
+
+    const calculateTotal = () => {
+        return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    };
+
+    const calculateLabelTotal = () => {
+        return cart.reduce((sum, item) => sum + item.labelPrice * item.quantity, 0);
+    };
+
+    const totalPrice = calculateTotal();
+    const totalLabelPrice = calculateLabelTotal();
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+
+    // count number of items in the cart
+    // const countItems = () => {
+    //     let count = 0;
+    //     cart.forEach((item) => {
+    //         count += item.quantity;
+    //     });
+    //     setTotalItems(count);
+    // }
+
+    // useEffect(() => {
+    //     countItems();
+    // }, [cart]);
 
     return (
         <div className="w-full h-full flex flex-row items-center justify-center pt-4">
@@ -50,9 +79,9 @@ export default function CartPage() {
                                 <button className="bg-accent text-white px-2 py-1 rounded-md font-bold cursor-pointer hover:bg-accent/60 mr-2 aspect-square"
                                     onClick={() => {
                                         addToCart(item, -1);
-                                        setCart(getCart()); // Update cart state with new quantity
-                                        setTotalPrice(getTotal());
-                                        setTotalLabelPrice(getTotalLabelPrice());
+                                        // setCart(getCart()); // Update cart state with new quantity
+                                        // setTotalPrice(getTotal());
+                                        // setTotalLabelPrice(getTotalLabelPrice());
                                     }}
                                 >
                                     <BiMinus />
@@ -61,9 +90,9 @@ export default function CartPage() {
                                 <button className="bg-accent text-white px-2 py-1 rounded-md font-bold cursor-pointer hover:bg-accent/60 ml-2 aspect-square"
                                     onClick={() => {
                                         addToCart(item, 1);
-                                        setCart(getCart()); // Update cart state with new quantity
-                                        setTotalPrice(getTotal());
-                                        setTotalLabelPrice(getTotalLabelPrice());
+                                        // setCart(getCart()); // Update cart state with new quantity
+                                        // setTotalPrice(getTotal());
+                                        // setTotalLabelPrice(getTotalLabelPrice());
                                     }}
                                 >
                                     <BiPlus />
@@ -82,9 +111,9 @@ export default function CartPage() {
                                 className="absolute right-[5px] text-red-600 hover:bg-red-500 text-lg hover:text-white px-2 py-1 flex flex-row justify-center items-center gap-1  rounded-full  cursor-pointer ml-2 aspect-square"
                                 onClick={() => {
                                     removeFromCart(item.productId);
-                                    setCart(getCart());
-                                    setTotalPrice(getTotal());
-                                    setTotalLabelPrice(getTotalLabelPrice());
+                                    // setCart(getCart());
+                                    // setTotalPrice(getTotal());
+                                    // setTotalLabelPrice(getTotalLabelPrice());
                                 }}
                             >
                                 <BiTrash />

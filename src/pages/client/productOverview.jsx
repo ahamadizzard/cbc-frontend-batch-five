@@ -4,7 +4,9 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import ImageSlider from "../../components/imageSlider.jsx";
 import Loading from "../../components/loading.jsx";
-import { addToCart, getCart } from "../../utils/cart.js";
+// import { addToCart, getCart } from "../../utils/cart.js";
+import { getCart } from "../../utils/cart.js";
+import { useCart } from "../../components/cartContext.jsx";
 
 export default function ProductOverview() {
     const navigate = useNavigate();
@@ -14,6 +16,16 @@ export default function ProductOverview() {
     const [product, setProduct] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [reviewsLoading, setReviewsLoading] = useState(true);
+
+    // const cartCountItem = () => {
+    const { cartCount } = useCart();
+    const { addToCart } = useCart();
+
+    // const handleAdd = () => {
+    //     const newItem = { id: Date.now(), name: "New Product" };
+    //     addToCart(newItem);
+    // };
+    // }
 
     useEffect(() => {
         // Fetch product data
@@ -94,6 +106,7 @@ export default function ProductOverview() {
                                                 console.log(getCart());
                                                 addToCart(product, 1);
                                                 console.log(getCart());
+                                                // addToCartQuantity(product, 1);
                                                 toast.success("Product added to cart");
                                             }}>
                                             Add to Cart

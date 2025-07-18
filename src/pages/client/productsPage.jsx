@@ -29,10 +29,10 @@ export default function ProductsPage() {
                     <div className="flex justify-between items-center">
                         <h1 className="text-2xl font-bold text-gray-800">ShopEase</h1>
                         <nav className="flex space-x-6">
-                            <a href="#" className="text-gray-600 hover:text-blue-600">Home</a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600">Products</a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600">About</a>
-                            <a href="#" className="text-gray-600 hover:text-blue-600">Contact</a>
+                            <a href="/" className="text-gray-600 hover:text-blue-600">Home</a>
+                            <a href="/products" className="text-gray-600 hover:text-blue-600">Products</a>
+                            <a href="/about" className="text-gray-600 hover:text-blue-600">About</a>
+                            <a href="/contact" className="text-gray-600 hover:text-blue-600">Contact</a>
                         </nav>
                         <div className="flex items-center space-x-4">
                             <button className="p-2 text-gray-600 hover:text-blue-600">
@@ -69,7 +69,7 @@ export default function ProductsPage() {
             </main>
 
             {/* Page Footer */}
-            <footer className="bg-gray-800 text-white py-8">
+            {/* <footer className="bg-gray-800 text-white py-8">
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         <div>
@@ -108,7 +108,7 @@ export default function ProductsPage() {
                         <p>&copy; {new Date().getFullYear()} ShopEase. All rights reserved.</p>
                     </div>
                 </div>
-            </footer>
+            </footer> */}
         </div>
     );
 }

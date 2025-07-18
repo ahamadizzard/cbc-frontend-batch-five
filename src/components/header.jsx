@@ -3,9 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiCart } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
+import { useCart } from '../components/cartContext.jsx';
+
 export default function Header() {
     const [sideDrawerOpened, setSideDrawerOpened] = useState(true)
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const { cartItems } = useCart();
+
+    const { getTotalQuantity } = useCart();
+    const quantity = getTotalQuantity();
 
     return (
 
@@ -19,18 +26,45 @@ export default function Header() {
             {/* menus */}
             <div className="w-[calc(100%-80px)] h-[60px] hidden md:flex  justify-start items-center gap-4 ">
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/">Home</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/login">Login</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/signup">Sign Up</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/admin">Admin</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/contact">Contact</Link>
                 <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/search">Products</Link>
+                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/admin">Admin</Link>
+                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/register">Sign Up</Link>
+                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/contact">Contact</Link>
+                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/about">About Us</Link>
             </div>
             {/* Cart */}
-            <div className="absolute right-10 w-[60px] hidden md:flex justify-center items-center bg-accent hover:bg-accent/70 rounded-full ">
-                <Link to="/cart" className="text-[15px] font-bold">
+            <div className="absolute right-10 w-[150px] gap-2 hidden md:flex justify-center items-center">
+                {/* <Link to="/cart" className="text-[15px] w-[80px] h-[40px] font-bold bg-accent hover:bg-accent/70 rounded-2xl flex flex-row  justify-center items-center "> */}
+                {/* <div className="cart-icon">
+                        🛒 Cart ({cartItems.length})
+                    </div> */}
+                {/* <BiCart className="text-white text-2xl mt-1" /> */}
+                {/* <span className="text-sm font-bold text-white">Cart <p className="absolute top-[-10px] right-[78px] w-[20px] h-[20px] bg-red-500  rounded-full flex justify-center items-center text-[16px] font-bold text-white">{cartItems.length}</p></span> */}
+                {/* </Link> */}
+                <Link to="/cart" className="text-[15px] w-[80px] h-[40px] font-bold bg-accent hover:bg-accent/70 rounded-2xl flex flex-row justify-center items-center relative">
                     <BiCart className="text-white text-2xl mt-1" />
-                    <span className="text-sm font-bold text-white">Cart</span>
+                    <span className="text-sm font-bold text-white">
+                        Cart
+                        {quantity > 0 && (
+                            <p className="absolute top-[-10px] right-[-10px] w-[20px] h-[20px] bg-red-500 rounded-full flex justify-center items-center text-[16px] font-bold text-white">
+                                {quantity}
+                            </p>
+                        )}
+                    </span>
                 </Link>
+                {
+                    token == null ?
+                        <Link to="/login" className="text-[15px] font-bold text-white bg-accent hover:bg-accent/70 rounded-b-2xl flex flex-col justify-center items-center p-2">
+                            <span className="text-sm font-bold">Login</span>
+                        </Link>
+                        :
+                        <button className="text-[15px] w-[80px] h-[40px] font-semibold text-white bg-accent hover:bg-accent/70 rounded-2xl flex justify-center items-center p-2" onClick={() => {
+                            localStorage.removeItem('token');
+                            navigate('/login')
+                        }
+                        }>Log-out</button>
+                }
+
             </div>
             {
                 sideDrawerOpened &&

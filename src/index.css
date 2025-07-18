@@ -52,3 +52,29 @@
   --font-fancy: "Exile", sans-serif;
   --font-main: "Playwrite HU", sans-serif;
 }
+
+.review-slider .slick-track {
+  display: flex !important;
+}
+
+.review-slider .slick-slide {
+  height: inherit !important;
+  margin: 0 12px;
+}
+
+.review-slider .slick-list {
+  margin: 0 -12px;
+  overflow: visible;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.slick-slide > div {
+  margin: 0 10px; /* Adjust gap size */
+}
