@@ -4,6 +4,7 @@ import { BiCart } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { useCart } from '../components/cartContext.jsx';
+import Swal from 'sweetalert2';
 
 export default function Header() {
     const [sideDrawerOpened, setSideDrawerOpened] = useState(true)
@@ -58,12 +59,52 @@ export default function Header() {
                             <span className="text-sm font-bold">Login</span>
                         </Link>
                         :
-                        <button className="text-[15px] w-[80px] h-[40px] font-semibold text-white bg-accent hover:bg-accent/70 rounded-2xl flex justify-center items-center p-2" onClick={() => {
-                            localStorage.removeItem('token');
-                            navigate('/login')
-                        }
-                        }>Log-out</button>
+                        <button className=" w-[80px] h-[40px] font-semibold text-white bg-accent hover:bg-accent/70 rounded-2xl flex flex-col justify-center items-center p-2"
+                            onClick={() => {
+                                Swal.fire({
+                                    title: 'Log-out?',
+                                    text: "Would you like to log-out of the page?",
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#6366f1', // Tailwind 'accent'
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Yes, Log-out',
+                                    cancelButtonText: 'No, Keep Logged-in'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        localStorage.removeItem('token');
+                                        navigate("/");
+                                    }
+                                });
+                                // const confirmToLogout = window.confirm("Are you sure you want to log out?");
+                                // if (confirmToLogout) {
+                                //     localStorage.removeItem('token');
+                                //     // localStorage.removeItem('cart');
+                                //     navigate('/')
+                                // }
+                            }
+                            }><p className="text-sm font-bold text-yellow-100">{localStorage.getItem('user')}</p><p className="text-[12px]">Log-out</p></button>
                 }
+
+                {/* <button
+                        onClick={() => {
+                            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                            if (totalQuantity > 0) {
+                                navigate("/checkout", { state: { cart } });
+                            } else {
+                                toast.error("Your cart is empty. Please add items before checking out.");
+                                setTimeout(() => {
+                                    const confirmGoToProducts = window.confirm("Would you like to go to the products page?");
+                                    if (confirmGoToProducts) {
+                                        navigate("/search");
+                                    }
+                                }, 2000); // slight delay to let the toast show first
+                            }
+                        }}
+                        className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60"
+                    >
+                        <MdPayment /> Checkout
+                    </button> */}
 
             </div>
             {

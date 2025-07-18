@@ -44,28 +44,7 @@ export default function ReviewsCarousel() {
         }
     }, [])
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const url = import.meta.env.VITE_API_BASE_URL + '/api/reviews/';
-    //         console.log("Fetching from:", url);
 
-    //         try {
-    //             const response = await axios.get(url, {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //                 }
-    //             });
-    //             console.log("Reviews fetched:", response.data);
-    //             setReviews(response.data);
-    //         } catch (error) {
-    //             console.error("Fetch error:", error);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
-
-    // console.log(reviews);
     return (
         <>
             <div className="w-[1600px] h-[380px] bg-accent/5 rounded-2xl shadow-xl px-4  p-6 mt-4 mb-1">
@@ -73,7 +52,7 @@ export default function ReviewsCarousel() {
                     {reviews.map((review, index) => (
                         <div
                             key={index}
-                            className="bg-white/70 rounded-xl shadow-xl p-5 mx-3 w-[280px] h-[340px] flex-shrink-0 snap-center hover:shadow-lg transition-all duration-200"
+                            className="bg-accent/30 rounded-2xl shadow-2xl p-5 mx-3 w-[280px] h-[340px] flex-shrink-0 snap-center hover:shadow-lg transition-all duration-200"
                         >
                             {/* Review Header with User Info */}
                             <div className="flex flex-col justify-center items-center mb-4">

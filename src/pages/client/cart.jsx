@@ -8,6 +8,11 @@ import { useCart } from "../../components/cartContext.jsx";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
+// for the sweetalert 2
+import Swal from 'sweetalert2';
+
+
+
 export default function CartPage() {
     // const [cart, setCart] = useState(getCart());
     const navigate = useNavigate();
@@ -148,7 +153,39 @@ export default function CartPage() {
                         <h1 className="text-lg font-semibold text-gray-600">Total Amount to Pay</h1>
                         <h1 className="text-lg font-semibold text-gray-600">Rs. {totalPrice.toFixed(2)}</h1>
                     </div>
+
                     <button
+                        onClick={() => {
+                            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                            if (totalQuantity > 0) {
+                                navigate("/checkout", { state: { cart } });
+                            } else {
+                                toast.error("Your cart is empty. Please add items before checking out.");
+
+                                setTimeout(() => {
+                                    Swal.fire({
+                                        title: 'Go to Products?',
+                                        text: "Would you like to browse products now?",
+                                        icon: 'question',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#6366f1', // Tailwind 'accent'
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, take me there',
+                                        cancelButtonText: 'No, stay here'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            navigate("/search");
+                                        }
+                                    });
+                                }, 2000); // Give time for toast to show first
+                            }
+                        }}
+                        className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60"
+                    >
+                        <MdPayment /> Checkout
+                    </button>
+
+                    {/* <button
                         onClick={() => {
                             const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
                             if (totalQuantity > 0) {
@@ -166,7 +203,7 @@ export default function CartPage() {
                         className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60"
                     >
                         <MdPayment /> Checkout
-                    </button>
+                    </button> */}
 
 
                     {/* <Link to="/checkout" state={

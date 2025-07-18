@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 // import { addToCart, getCart, getTotal, removeFromCart, getTotalLabelPrice } from "../../utils/cart";
 import { BiMinus, BiTrash, BiPlus, BiArrowBack, BiCart } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 export default function Checkout() {
     const location = useLocation();
@@ -88,7 +88,8 @@ export default function Checkout() {
             }
             )
             toast.success("Order placed successfully")
-            console.log(response.data)
+            Navigate("/search")
+            // console.log(response.data)
         } catch (error) {
             toast.error("Error placing order, Try again..")
         }

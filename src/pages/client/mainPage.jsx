@@ -64,7 +64,7 @@ export default function MainPage() {
                                 <h4 className="text-lg font-bold mb-2">Quick Links</h4>
                                 <ul className="space-y-2">
                                     <li><a href="/" className="text-accent hover:text-primary">Home</a></li>
-                                    <li><a href="/products" className="text-accent hover:text-primary">Products</a></li>
+                                    <li><a href="/search" className="text-accent hover:text-primary">Products</a></li>
                                     <li><a href="/about" className="text-accent hover:text-primary">About Us</a></li>
                                     <li><a href="/contact" className="text-accent hover:text-primary">Contact</a></li>
                                 </ul>
