@@ -37,7 +37,7 @@ export default function MainPage() {
                     Discover the best products, enjoy seamless shopping, and manage your cart with ease. Start exploring now!
                 </p>
                 <div className="flex flex-wrap gap-4 ">
-                    <Link to="/products" className="px-6 py-3 bg-accent text-white rounded-lg font-semibold shadow hover:bg-accent-dark transition">Shop Products</Link>
+                    <Link to="/search" className="px-6 py-3 bg-accent text-white rounded-lg font-semibold shadow hover:bg-accent-dark transition">Shop Products</Link>
                     {/* <Link to="/cart" className="px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold shadow hover:bg-blue-600 transition">View Cart</Link> */}
                     <Link to="/about" className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold shadow hover:bg-gray-300 transition">About</Link>
                     <Link to="/contact" className="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg font-semibold shadow hover:bg-gray-300 transition">Contact</Link>

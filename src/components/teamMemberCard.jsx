@@ -16,7 +16,7 @@ export default function TeamMemberCard({ name, role, bio, image }) {
             </div>
             <div className="p-6">
                 <h3 className="text-xl font-bold text-primary">{name}</h3>
-                <p className="text-accent mb-3">{role}</p>
+                <p className="text-accent font-bold mb-3">{role}</p>
                 <p className="text-gray-600">{bio}</p>
             </div>
         </div>

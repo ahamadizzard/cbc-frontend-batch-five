@@ -27,13 +27,13 @@ export default function ProductsPage() {
             <header className="bg-white shadow-md">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-2xl font-bold text-gray-800">ShopEase</h1>
-                        <nav className="flex space-x-6">
+                        <h1 className="text-2xl font-bold text-accent">CBC Webstore</h1>
+                        {/* <nav className="flex space-x-6">
                             <a href="/" className="text-gray-600 hover:text-blue-600">Home</a>
                             <a href="/products" className="text-gray-600 hover:text-blue-600">Products</a>
                             <a href="/about" className="text-gray-600 hover:text-blue-600">About</a>
                             <a href="/contact" className="text-gray-600 hover:text-blue-600">Contact</a>
-                        </nav>
+                        </nav> */}
                         <div className="flex items-center space-x-4">
                             <button className="p-2 text-gray-600 hover:text-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,7 +53,7 @@ export default function ProductsPage() {
             {/* Main Content */}
             <main className="flex-1 container mx-auto px-4 py-8">
                 <div className="mb-8">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-2">Featured Products</h2>
+                    <h2 className="text-3xl font-bold text-accent mb-2">Featured Products</h2>
                     <p className="text-gray-600">Discover our collection of premium products</p>
                 </div>
 

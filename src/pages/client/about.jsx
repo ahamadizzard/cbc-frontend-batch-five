@@ -54,23 +54,23 @@ export default function About() {
                         </div>
                         <div className="md:w-1/2">
                             <div className="bg-secondary/10 p-8 rounded-xl border-l-4 border-accent">
-                                <h3 className="text-2xl font-semibold text-secondary mb-4">Core Values</h3>
+                                <h3 className="text-2xl font-semibold text-accent mb-4">Core Values</h3>
                                 <ul className="space-y-4">
                                     <li className="flex items-start">
                                         <span className="text-accent mr-2">✓</span>
-                                        <span className="text-gray-700">User-centered design</span>
+                                        <span className="text-accent">User-centered design</span>
                                     </li>
                                     <li className="flex items-start">
                                         <span className="text-accent mr-2">✓</span>
-                                        <span className="text-gray-700">Technical excellence</span>
+                                        <span className="text-accent">Technical excellence</span>
                                     </li>
                                     <li className="flex items-start">
                                         <span className="text-accent mr-2">✓</span>
-                                        <span className="text-gray-700">Transparent communication</span>
+                                        <span className="text-accent">Transparent communication</span>
                                     </li>
                                     <li className="flex items-start">
                                         <span className="text-accent mr-2">✓</span>
-                                        <span className="text-gray-700">Continuous improvement</span>
+                                        <span className="text-accent">Continuous improvement</span>
                                     </li>
                                 </ul>
                             </div>

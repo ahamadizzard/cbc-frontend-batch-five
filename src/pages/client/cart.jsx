@@ -158,7 +158,7 @@ export default function CartPage() {
                                 setTimeout(() => {
                                     const confirmGoToProducts = window.confirm("Would you like to go to the products page?");
                                     if (confirmGoToProducts) {
-                                        navigate("/products");
+                                        navigate("/search");
                                     }
                                 }, 2000); // slight delay to let the toast show first
                             }
@@ -177,7 +177,7 @@ export default function CartPage() {
                         className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60">
                         <MdPayment /> Checkout
                     </Link> */}
-                    <Link to="/products" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
+                    <Link to="/search" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
                         <BiArrowBack /> Back to Shopping
                     </Link>
                 </div>

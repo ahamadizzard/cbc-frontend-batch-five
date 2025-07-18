@@ -23,7 +23,7 @@ function App() {
             {/* <Route path="/" element={<Navigate to="/login" replace />} /> */}
             {/* // this will redirect to login page if the user is not logged in */}
             {/* <Route path="/" element={<LoginPage />} /> */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="*" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 

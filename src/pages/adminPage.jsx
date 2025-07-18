@@ -62,7 +62,7 @@ export default function AdminPage() {
     }
 
     const userFirstName = user?.firstName + " " + user?.lastName || "Admin";
-    console.log("User:", userFirstName);
+    // console.log("User:", userFirstName);
     return (
         <div className="w-full h-screen flex bg-accent">
             {
