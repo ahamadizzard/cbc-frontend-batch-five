@@ -5,9 +5,12 @@ import { BiMinus, BiTrash, BiPlus, BiArrowBack } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useCart } from "../../components/cartContext.jsx";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function CartPage() {
     // const [cart, setCart] = useState(getCart());
+    const navigate = useNavigate();
     const { cartItems: cart, addToCart, removeFromCart } = useCart();
 
     // const [totalPrice, setTotalPrice] = useState(getTotal());
@@ -145,14 +148,35 @@ export default function CartPage() {
                         <h1 className="text-lg font-semibold text-gray-600">Total Amount to Pay</h1>
                         <h1 className="text-lg font-semibold text-gray-600">Rs. {totalPrice.toFixed(2)}</h1>
                     </div>
-                    <Link to="/checkout" state={
+                    <button
+                        onClick={() => {
+                            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+                            if (totalQuantity > 0) {
+                                navigate("/checkout", { state: { cart } });
+                            } else {
+                                toast.error("Your cart is empty. Please add items before checking out.");
+                                setTimeout(() => {
+                                    const confirmGoToProducts = window.confirm("Would you like to go to the products page?");
+                                    if (confirmGoToProducts) {
+                                        navigate("/products");
+                                    }
+                                }, 2000); // slight delay to let the toast show first
+                            }
+                        }}
+                        className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60"
+                    >
+                        <MdPayment /> Checkout
+                    </button>
+
+
+                    {/* <Link to="/checkout" state={
                         {
                             cart: cart
                         }
                     }
                         className="bg-accent text-white text-center flex flex-row items-center justify-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-accent/60">
                         <MdPayment /> Checkout
-                    </Link>
+                    </Link> */}
                     <Link to="/products" className="bg-secondary text-white text-center flex flex-row justify-center items-center gap-2 px-4 py-2 rounded-lg mt-4 w-full font-bold hover:bg-secondary/60">
                         <BiArrowBack /> Back to Shopping
                     </Link>
