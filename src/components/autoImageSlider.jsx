@@ -44,22 +44,15 @@ export default function AutoImageSlider() {
     return (
         // <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 p-4">
 
-        <div className="w-full h-full  p-6 mb-8 relative">
+        <div className="w-full min-w-full max-w-screen-2xl h-full p-4 mb-8 mx-auto rounded-full relative">
 
             <Slider ref={sliderRef} {...settings}>
                 {images.map((img, idx) => (
-                    <div key={idx} className="relative w-full h-96 rounded-2xl overflow-clip">
-                        <img src={img} alt={`Slide ${idx + 1}`} className="w-full object-fill rounded-xl transition-all duration-700 shadow-xl shadow-gray-200" />
+                    <div key={idx} className="relative w-full min-w-full max-w-screen-2xl h-96 rounded-full overflow-hidden flex items-center justify-center mx-auto">
+                        <img src={img} alt={`Slide ${idx + 1}`} className="w-full h-full object-contain rounded-full transition-all duration-700 shadow-xl shadow-gray-200" />
                     </div>
                 ))}
             </Slider>
-            {/* Custom arrows */}
-            {/* <button onClick={goToPrev} className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 bg-opacity-70 hover:bg-opacity-100 text-accent rounded-full p-2 shadow transition z-10">
-                <ChevronLeftIcon className="h-6 w-6" />
-            </button>
-            <button onClick={goToNext} className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 bg-opacity-70 hover:bg-opacity-100 text-accent rounded-full p-2 shadow transition z-10">
-                <ChevronRightIcon className="h-6 w-6" />
-            </button> */}
             {/* Slide number indicator */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black bg-opacity-40 text-white px-4 py-1 rounded-full text-xs font-semibold tracking-wider">
                 {current + 1} / {images.length}

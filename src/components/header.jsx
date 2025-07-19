@@ -23,18 +23,18 @@ export default function Header() {
                     setSideDrawerOpened(true)
                 }} />
             {/* logo display */}
-            <img src="/logo.png" className="w-[100px] h-[50px] object-fill  pr-3" alt="logo" />
+            <img src="/logo.png" className="absolute left-3 -top-1 w-[120px] h-[80px] object-fill pr-3" alt="logo" />
             {/* menus */}
-            <div className="w-[calc(100%-80px)] h-[60px] hidden md:flex  justify-start items-center gap-4 ">
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/">Home</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/search">Products</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/admin">Admin</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/register">Sign Up</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/contact">Contact</Link>
-                <Link className="hover:bg-accent hover:text-white p-2 rounded-md" to="/about">About Us</Link>
+            <div className=" absolute left-30 w-[calc(100%-100px)] h-[60px] hidden md:flex justify-start items-center gap-4 ">
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/">Home</Link>
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/search">Products</Link>
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/admin">Admin</Link>
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/register">Sign Up</Link>
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/contact">Contact</Link>
+                <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/about">About Us</Link>
             </div>
             {/* Cart */}
-            <div className="absolute right-10 w-[150px] gap-2 hidden md:flex justify-center items-center">
+            <div className="absolute right-2 top-5 w-[150px] gap-2 hidden md:flex justify-center items-center">
                 {/* <Link to="/cart" className="text-[15px] w-[80px] h-[40px] font-bold bg-accent hover:bg-accent/70 rounded-2xl flex flex-row  justify-center items-center "> */}
                 {/* <div className="cart-icon">
                         🛒 Cart ({cartItems.length})

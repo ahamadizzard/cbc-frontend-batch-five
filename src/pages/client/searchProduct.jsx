@@ -118,47 +118,7 @@ export default function SearchProductsPage() {
                 )}
             </main>
 
-            {/* Page Footer */}
-            <footer className="bg-gray-800 text-white py-8">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div>
-                            <h3 className="text-lg font-bold mb-4">ShopEase</h3>
-                            <p className="text-gray-400">Your one-stop shop for quality products at affordable prices.</p>
-                        </div>
-                        <div>
-                            <h4 className="text-md font-semibold mb-4">Quick Links</h4>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-white">Home</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">Products</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">About Us</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">Contact</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="text-md font-semibold mb-4">Customer Service</h4>
-                            <ul className="space-y-2">
-                                <li><a href="#" className="text-gray-400 hover:text-white">FAQs</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">Shipping Policy</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">Returns & Refunds</a></li>
-                                <li><a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 className="text-md font-semibold mb-4">Contact Us</h4>
-                            <address className="text-gray-400 not-italic">
-                                123 Shop Street<br />
-                                Commerce City, CC 12345<br />
-                                <a href="mailto:info@shopease.com" className="hover:text-white">info@shopease.com</a><br />
-                                (123) 456-7890
-                            </address>
-                        </div>
-                    </div>
-                    <div className="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
-                        <p>&copy; {new Date().getFullYear()} ShopEase. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
+
         </div>
     );
 }
