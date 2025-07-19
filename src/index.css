@@ -53,6 +53,10 @@
   --font-main: "Playwrite HU", sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .review-slider .slick-track {
   display: flex !important;
 }

@@ -16,7 +16,7 @@ import MainPage from './client/mainPage.jsx'
 
 export default function HomePage() {
     return (
-        <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-accent/10">
+        <div className="w-full min-h-screen items-center justify-center bg-gradient-to-br from-blue-100 to-accent/10">
             <div className='w-full flex flex-col items-center ml-10 overflow-y-auto'>
                 <Routes path="*">
                     <Route path="*" element={<MainPage />} />

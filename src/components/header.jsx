@@ -23,9 +23,9 @@ export default function Header() {
                     setSideDrawerOpened(true)
                 }} />
             {/* logo display */}
-            <img src="/logo.png" className="absolute left-3 -top-1 w-[120px] h-[80px] object-fill pr-3" alt="logo" />
+            <img src="/logo.png" className="absolute left-6 -top-1 w-[120px] h-[80px] object-fill pr-3" alt="logo" />
             {/* menus */}
-            <div className=" absolute left-30 w-[calc(100%-100px)] h-[60px] hidden md:flex justify-start items-center gap-4 ">
+            <div className=" absolute left-40 w-[calc(100%-100px)] h-[60px] hidden md:flex justify-start items-center gap-4 ">
                 <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/">Home</Link>
                 <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/search">Products</Link>
                 <Link className="hover:bg-accent hover:text-white text-accent font-extrabold p-2 rounded-md" to="/admin">Admin</Link>

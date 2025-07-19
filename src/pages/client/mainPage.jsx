@@ -17,9 +17,9 @@ export default function MainPage() {
         "image09.jpg",
     ]
     return (
-        <div className="w-full h-screen flex flex-col items-center">
+        <div className="w-full h-screen flex flex-col items-center justify-center">
 
-            <div className='flex justify-center w-full h-[550px] mx-auto px-4 p-4 mt-8 mb-4'>
+            <div className='flex items-center justify-center w-full h-[550px] mx-auto px-4 p-4 mt-8 mb-4'>
 
                 <AutoImageSlider images={[
                     // add a map function to iterate over heroSectionImages
@@ -52,10 +52,13 @@ export default function MainPage() {
             </div>
             {/* Page Footer */}
             {/* <footer className="bg-accent/40 text-accent py-8 w-full mt-10 mx-auto"> */}
-            <div className='w-full rounded-2xl shadow-xl mx-auto p-6 flex flex-col items-center justify-center mt-4 mb-1-full'>
+            <div className='w-full rounded-2xl shadow-xl mx-auto p-2 flex flex-col items-center justify-center mt-4 mb-1-full'>
                 <footer className="w-full bg-accent/30 text-accent rounded-t-2xl shadow-xl mx-auto p-6 flex flex-col items-center justify-center mt-4 ">
-                    <div className="container   mx-auto px-4">
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div className="container mx-auto px-1">
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+                            <div>
+                                <img src="/logo.png" className="left-2 w-[200px] h-[150px] object-fill" alt="logo" />
+                            </div>
                             <div>
                                 <h3 className="text-lg font-bold mb-2">CBC Store</h3>
                                 <p className="text-accent">Your one-stop shop for quality products at affordable prices.</p>
