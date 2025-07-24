@@ -17,9 +17,9 @@ export default function MainPage() {
         "image09.jpg",
     ]
     return (
-        <div className="w-full h-screen flex flex-col items-center justify-center">
+        <div className="w-full h-screen flex flex-col items-center justify-center mt-80">
 
-            <div className='flex items-center justify-center w-full h-[550px] mx-auto px-4 p-4 mt-8 mb-4'>
+            <div className='flex items-center justify-center w-full h-[550px] mx-auto px-4 mt-10 p-4 mb-4'>
 
                 <AutoImageSlider images={[
                     // add a map function to iterate over heroSectionImages

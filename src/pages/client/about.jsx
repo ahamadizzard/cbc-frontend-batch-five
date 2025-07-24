@@ -27,7 +27,7 @@ export default function About() {
     return (
         <div className="min-h-screen bg-background">
             {/* Hero Section */}
-            <section className="relative py-20 bg-accent text-white">
+            <section className="relative py-20 bg-accent text-white mt-10 mb-10 ">
                 <div className="container mx-auto px-6 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Story</h1>
                     <p className="text-xl max-w-3xl mx-auto">
@@ -98,7 +98,7 @@ export default function About() {
             </section>
 
             {/* Stats Section */}
-            <section className="py-16 bg-secondary text-white">
+            <section className="py-16 bg-secondary rounded-xl text-white mb-10">
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                         <div className="p-6">
