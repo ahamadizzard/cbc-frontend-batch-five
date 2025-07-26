@@ -10,7 +10,7 @@ export default function About() {
         },
         {
             id: 2,
-            name: 'Sam Wilson',
+            name: 'Sam Wilson Jr.',
             role: 'Lead Developer',
             bio: 'Full-stack wizard passionate about clean code.',
             image: '/images/team/sam.jpg'
